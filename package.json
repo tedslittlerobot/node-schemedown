@@ -1,0 +1,11 @@
+{
+  "name": "schemify",
+  "version": "1.0.0",
+  "description": "Schema JSON for Docusaurus",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "author": "Stefan",
+  "license": "MIT"
+}
