@@ -1,0 +1,22 @@
+{
+  "$id": "schema://petstore",
+  "$defs": {
+    "shop": {
+      "type": "object",
+      "properties": {
+        "shop_name": {
+          "type": "string"
+        },
+        "pets": {
+          "type": "array",
+          "items": {
+            "oneOf": [
+              {"$ref": "schema://petstore/pets/dog"},
+              {"$ref": "schema://petstore/pets/cat"}
+            ]
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "$id": "schema://petstore/pets/dog",
+  "$defs": {
+    "coat_colour": {
+      "type": "string",
+      "enum": ["gray", "chocolate", "white", "black"]
+    }
+  },
+  "type": "object",
+  "properties": {
+    "type": {
+      "type": "string",
+      "const": "dog"
+    },
+    "coat": {
+      "$ref": "#/coat_colour"
+    },
+    "bark_volume": {
+      "type": "integer"
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "$id": "schema://petstore/pets/cat",
+  "$defs": {
+    "coat_colour": {
+      "type": "string",
+      "enum": ["tabby", "black", "white", "black and white"]
+    }
+  },
+  "type": "object",
+  "properties": {
+    "type": {
+      "type": "string",
+      "const": "dog"
+    },
+    "coat": {
+      "$ref": "#/coat_colour"
+    },
+    "meow_volume": {
+      "type": "integer"
+    }
+  }
+}
