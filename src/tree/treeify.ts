@@ -10,7 +10,7 @@ export function treeify(schemas: Record<string, Schema>, rootKey: string | undef
 
 	return buildTree({
 		$id: root.$id,
-		id: '',
+		path: '',
 		key: '',
 		children: [],
 	}, keyList);

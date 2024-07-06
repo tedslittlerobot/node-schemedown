@@ -20,8 +20,8 @@ export function buildTree(root: TreeLeaf, keys: KeyReference[]): TreeLeaf {
 			}
 
 			// Otherwise, make a leaf with no $id
-			const id = branch.id === '' ? segment : `${branch.id}/${segment}`;
-			const newBranch = {id, key: segment, children: []};
+			const path = branch.path === '' ? segment : `${branch.path}/${segment}`;
+			const newBranch: TreeLeaf = {path, key: segment, children: []};
 			branch.children.push(newBranch);
 			branch = newBranch;
 		}
@@ -29,7 +29,7 @@ export function buildTree(root: TreeLeaf, keys: KeyReference[]): TreeLeaf {
 		// Finally push the actual end page
 		branch.children.push({
 			$id: key.$id,
-			id: key.key,
+			path: key.key,
 			key: leaf,
 			children: [],
 		});

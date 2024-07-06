@@ -9,22 +9,22 @@ test('petstore', async t => {
 		await treeifyFromDirectory('sample-schemas/petstore', undefined),
 		{
 			$id: 'schema://petstore',
-			id: '',
+			path: '',
 			key: '',
 			children: [
 				{
-					id: 'pets',
+					path: 'pets',
 					key: 'pets',
 					children: [
 						{
 							$id: 'schema://petstore/pets/cat',
-							id: 'pets/cat',
+							path: 'pets/cat',
 							key: 'cat',
 							children: [],
 						},
 						{
 							$id: 'schema://petstore/pets/dog',
-							id: 'pets/dog',
+							path: 'pets/dog',
 							key: 'dog',
 							children: [],
 						},

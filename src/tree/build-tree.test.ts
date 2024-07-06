@@ -1,18 +1,19 @@
 /* eslint-disable ava/no-ignored-test-files */
 import test from 'ava';
 import {buildTree} from './build-tree.js';
+import type {TreeLeaf} from './types.js';
 
 test('builds empty tree onto root', t => {
-	t.deepEqual(
+	t.deepEqual<TreeLeaf, TreeLeaf>(
 		buildTree({
 			$id: 'root',
-			id: '',
+			path: '',
 			key: '',
 			children: [],
 		}, []),
 		{
 			$id: 'root',
-			id: '',
+			path: '',
 			key: '',
 			children: [],
 		},
@@ -20,10 +21,10 @@ test('builds empty tree onto root', t => {
 });
 
 test('builds simple tree onto root', t => {
-	t.deepEqual(
+	t.deepEqual<TreeLeaf, TreeLeaf>(
 		buildTree({
 			$id: 'root',
-			id: '',
+			path: '',
 			key: '',
 			children: [],
 		}, [
@@ -33,17 +34,17 @@ test('builds simple tree onto root', t => {
 		]),
 		{
 			$id: 'root',
-			id: '',
+			path: '',
 			key: '',
 			children: [
 				{
 					$id: 'root/foo',
-					id: 'foo',
+					path: 'foo',
 					key: 'foo',
 					children: [
 						{
 							$id: 'root/foo/bar',
-							id: 'foo/bar',
+							path: 'foo/bar',
 							key: 'bar',
 							children: [],
 						},
@@ -51,7 +52,7 @@ test('builds simple tree onto root', t => {
 				},
 				{
 					$id: 'root/baz',
-					id: 'baz',
+					path: 'baz',
 					key: 'baz',
 					children: [],
 				},
@@ -61,10 +62,10 @@ test('builds simple tree onto root', t => {
 });
 
 test('builds tree with one missing branch', t => {
-	t.deepEqual(
+	t.deepEqual<TreeLeaf, TreeLeaf>(
 		buildTree({
 			$id: 'root',
-			id: '',
+			path: '',
 			key: '',
 			children: [],
 		}, [
@@ -72,16 +73,16 @@ test('builds tree with one missing branch', t => {
 		]),
 		{
 			$id: 'root',
-			id: '',
+			path: '',
 			key: '',
 			children: [
 				{
-					id: 'foo',
+					path: 'foo',
 					key: 'foo',
 					children: [
 						{
 							$id: 'root/foo/bar',
-							id: 'foo/bar',
+							path: 'foo/bar',
 							key: 'bar',
 							children: [],
 						},
@@ -93,10 +94,10 @@ test('builds tree with one missing branch', t => {
 });
 
 test('builds tree with many missing branches', t => {
-	t.deepEqual(
+	t.deepEqual<TreeLeaf, TreeLeaf>(
 		buildTree({
 			$id: 'root',
-			id: '',
+			path: '',
 			key: '',
 			children: [],
 		}, [
@@ -104,24 +105,24 @@ test('builds tree with many missing branches', t => {
 		]),
 		{
 			$id: 'root',
-			id: '',
+			path: '',
 			key: '',
 			children: [
 				{
-					id: 'foo',
+					path: 'foo',
 					key: 'foo',
 					children: [
 						{
-							id: 'foo/bar',
+							path: 'foo/bar',
 							key: 'bar',
 							children: [
 								{
-									id: 'foo/bar/baz',
+									path: 'foo/bar/baz',
 									key: 'baz',
 									children: [
 										{
 											$id: 'root/foo/bar/baz/monkeys',
-											id: 'foo/bar/baz/monkeys',
+											path: 'foo/bar/baz/monkeys',
 											key: 'monkeys',
 											children: [],
 										},
@@ -137,10 +138,10 @@ test('builds tree with many missing branches', t => {
 });
 
 test('builds tree with missing branches', t => {
-	t.deepEqual(
+	t.deepEqual<TreeLeaf, TreeLeaf>(
 		buildTree({
 			$id: 'root',
-			id: '',
+			path: '',
 			key: '',
 			children: [],
 		}, [
@@ -149,16 +150,16 @@ test('builds tree with missing branches', t => {
 		]),
 		{
 			$id: 'root',
-			id: '',
+			path: '',
 			key: '',
 			children: [
 				{
-					id: 'foo',
+					path: 'foo',
 					key: 'foo',
 					children: [
 						{
 							$id: 'root/foo/bar',
-							id: 'foo/bar',
+							path: 'foo/bar',
 							key: 'bar',
 							children: [],
 						},
@@ -166,7 +167,7 @@ test('builds tree with missing branches', t => {
 				},
 				{
 					$id: 'root/baz',
-					id: 'baz',
+					path: 'baz',
 					key: 'baz',
 					children: [],
 				},

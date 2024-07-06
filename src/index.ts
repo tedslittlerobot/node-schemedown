@@ -1,5 +1,6 @@
-import type {PluginModule} from '@docusaurus/types/src/plugin.js';
-import type {Options} from './types.js';
+// @todo
+// import type {PluginModule} from '@docusaurus/types/src/plugin.js';
+// import type {Options} from './types.js';
 // import {schemafy} from './schemafy.js';
 
 // const schemafier: PluginModule = async (context, options: Options) => ({

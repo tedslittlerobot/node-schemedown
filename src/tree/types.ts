@@ -6,10 +6,22 @@ export type KeyReference = {
 
 export type TreeLeaf = {
 	/**
-	 * The ID from the JSON Schema Doc
+	 * The ID from the JSON Schema Doc. Undefined if there is no corresponding doc.
 	 */
 	$id?: string;
-	id: string;
+
+	/**
+	 * The full path of the item in the heirarchy.
+	 */
+	path: string;
+
+	/**
+	 * The key of the item
+	 */
 	key: string;
+
+	/**
+	 * Child items
+	 */
 	children: TreeLeaf[];
 };
