@@ -3,8 +3,10 @@ export type RenderManifest = RenderManifestItem[];
 
 export type RenderManifestItem = {
 	path: string;
-	file: RawFile | MarkdownFile | JsonFile;
+	file: RenderableFile;
 };
+
+export type RenderableFile = RawFile | MarkdownFile | JsonFile;
 
 export type MarkdownFile = {
 	type: 'markdown';
