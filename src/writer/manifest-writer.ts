@@ -1,6 +1,6 @@
 import {writeFile} from 'node:fs/promises';
+import {ensureDirectoryExists} from 'src/utils/io.js';
 import type {RenderManifest, RenderableFile} from 'src/writer/types.js';
-import {ensureDirectoryExists} from './ensure-directory-exists.writer.js';
 
 export async function writeManifest(manifest: RenderManifest, outDirectory: string) {
 	for (const {path, file} of manifest) {
@@ -31,7 +31,15 @@ export async function renderFile(file: RenderableFile): Promise<string> {
 		}
 
 		case 'markdown': {
-			return '';
+			if (file.frontMatter && Object.keys(file.frontMatter).length > 0) {
+				return `---
+${JSON.stringify(file.frontMatter)}
+---
+
+${file.content}`;
+			}
+
+			return file.content;
 		}
 	}
 }

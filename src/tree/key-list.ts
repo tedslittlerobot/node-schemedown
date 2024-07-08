@@ -1,8 +1,8 @@
 import type {KeyReference} from './types.js';
 
-export function makeDocumentKeyList(keys: string[], rootKey: string | undefined): KeyReference[] {
+export function makeDocumentKeyList(keys: string[]): [KeyReference, KeyReference[]] {
 	keys = keys.sort();
-	rootKey ??= keys[0];
+	const rootKey = keys[0];
 
 	const keyList: KeyReference[] = [];
 
@@ -25,5 +25,7 @@ export function makeDocumentKeyList(keys: string[], rootKey: string | undefined)
 		keyList.push({$id, key});
 	}
 
-	return keyList;
+	const root = keyList.shift()!;
+
+	return [root, keyList];
 }
