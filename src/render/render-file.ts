@@ -1,4 +1,4 @@
-import type {RenderableFile} from 'src/writer/types.js';
+import {type RenderableFile} from './types.js';
 
 export async function renderFile(file: RenderableFile): Promise<string> {
 	switch (file.type) {

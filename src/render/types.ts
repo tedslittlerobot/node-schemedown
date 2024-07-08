@@ -1,3 +1,8 @@
+import {type SchemaTree} from 'src/tree/tree.class.js';
+
+export type Renderer = {
+	render(tree: SchemaTree): RenderManifest;
+};
 
 export type RenderManifest = RenderManifestItem[];
 

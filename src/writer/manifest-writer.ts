@@ -1,7 +1,7 @@
 import {writeFile} from 'node:fs/promises';
 import {renderFile} from 'src/render/render-file.js';
+import {type RenderManifest} from 'src/render/types.js';
 import {ensureDirectoryExists} from 'src/utils/io.js';
-import type {RenderManifest, RenderableFile} from 'src/writer/types.js';
 
 export async function writeManifest(manifest: RenderManifest, outDirectory: string) {
 	for (const {path, file} of manifest) {
