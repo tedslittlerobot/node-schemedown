@@ -1,4 +1,5 @@
 import {writeFile} from 'node:fs/promises';
+import {renderFile} from 'src/render/render-file.js';
 import {ensureDirectoryExists} from 'src/utils/io.js';
 import type {RenderManifest, RenderableFile} from 'src/writer/types.js';
 
@@ -18,28 +19,4 @@ export async function writeManifest(manifest: RenderManifest, outDirectory: stri
 
 export function constructFullPath(path: string, outDirectory: string) {
 	return `${outDirectory === '' ? '.' : outDirectory}/${path}`;
-}
-
-export async function renderFile(file: RenderableFile): Promise<string> {
-	switch (file.type) {
-		case 'raw': {
-			return file.content;
-		}
-
-		case 'json': {
-			return JSON.stringify(file.content);
-		}
-
-		case 'markdown': {
-			if (file.frontMatter && Object.keys(file.frontMatter).length > 0) {
-				return `---
-${JSON.stringify(file.frontMatter)}
----
-
-${file.content}`;
-			}
-
-			return file.content;
-		}
-	}
 }
