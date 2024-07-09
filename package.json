@@ -1,7 +1,7 @@
 {
-  "name": "schemify",
+  "name": "schemedown",
   "version": "1.0.0",
-  "description": "Schema JSON for Docusaurus",
+  "description": "Schema JSON to Markdown Converter",
   "type": "module",
   "module": "lib/index.js",
   "main": "lib/index.js",
