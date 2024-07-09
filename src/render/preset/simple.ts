@@ -1,6 +1,6 @@
 import {capitalCase} from 'change-case';
 import type {RenderDefinitionContext, RenderDocumentContext} from '../types.js';
-import {BaseRenderer} from '../renderer.class.js';
+import {BaseRenderer} from '../base-renderer.class.js';
 
 type DocumentRenderFunctions = {
 	title: (context: RenderDocumentContext) => string;
@@ -8,27 +8,25 @@ type DocumentRenderFunctions = {
 };
 
 export class SimpleRenderer extends BaseRenderer {
+	async rootDocumentNode({node, manifest}: RenderDocumentContext): Promise<void> {
+		manifest.push({
+			path: [node.path, 'index.md'].filter(Boolean).join('/'),
+			file: {type: 'markdown', content: '# Root'},
+		});
+	}
+
+	async missingDocumentNode({node, manifest}: RenderDocumentContext): Promise<void> {
+		manifest.push({
+			path: [node.path, 'index.md'].filter(Boolean).join('/'),
+			file: {type: 'markdown', content: `# ${capitalCase(node.key)} (leaf)`},
+		});
+	}
+
 	async documentNode({node, manifest}: RenderDocumentContext): Promise<void> {
-		if (node.path === '') {
-			manifest.push({
-				path: [node.path, 'index.md'].filter(Boolean).join('/'),
-				file: {type: 'markdown', content: '# Root'},
-			});
-
-			return;
-		}
-
-		if (node.definition) {
-			manifest.push({
-				path: [node.path, 'index.md'].filter(Boolean).join('/'),
-				file: {type: 'markdown', content: `# ${capitalCase(node.key)}`},
-			});
-		} else {
-			manifest.push({
-				path: [node.path, 'index.md'].filter(Boolean).join('/'),
-				file: {type: 'markdown', content: `# ${capitalCase(node.key)} (leaf)`},
-			});
-		}
+		manifest.push({
+			path: [node.path, 'index.md'].filter(Boolean).join('/'),
+			file: {type: 'markdown', content: `# ${capitalCase(node.key)}`},
+		});
 	}
 
 	async definitionNode({key, document: {node, manifest}}: RenderDefinitionContext): Promise<void> {

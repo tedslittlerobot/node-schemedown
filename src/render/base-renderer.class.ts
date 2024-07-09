@@ -18,7 +18,13 @@ export abstract class BaseRenderer implements Renderer {
 	}
 
 	async recursiveTreeWalk(context: RenderDocumentContext): Promise<RenderManifest> {
-		await this.documentNode(context);
+		if (context.node.path === '') {
+			await this.rootDocumentNode(context);
+		} else if (context.node.definition) {
+			await this.documentNode(context);
+		} else {
+			await this.missingDocumentNode(context);
+		}
 
 		for (const definition of context.node.definitions) {
 			// eslint-disable-next-line no-await-in-loop
@@ -43,6 +49,8 @@ export abstract class BaseRenderer implements Renderer {
 		return context.manifest;
 	}
 
+	abstract rootDocumentNode(context: RenderDocumentContext): Promise<void>;
+	abstract missingDocumentNode(context: RenderDocumentContext): Promise<void>;
 	abstract documentNode(context: RenderDocumentContext): Promise<void>;
 	abstract definitionNode(context: RenderDefinitionContext): Promise<void>;
 }
