@@ -16,6 +16,13 @@ test('renders json', async t => {
 	);
 });
 
+test('renders markdown made up of array of chunks', async t => {
+	t.is(
+		await renderFile({type: 'markdown', content: ['# foo', undefined, 'bar baz\n', undefined]}),
+		'# foo\n\nbar baz\n',
+	);
+});
+
 test('renders markdown with no front matter', async t => {
 	t.is(
 		await renderFile({type: 'markdown', content: '# foo\n\nbar baz\n'}),

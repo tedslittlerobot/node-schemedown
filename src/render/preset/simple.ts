@@ -1,11 +1,14 @@
 import {capitalCase} from 'change-case';
-import {type SchemaTree} from 'src/tree/tree.class.js';
-import type {SchemaUriNode} from 'src/tree/types.js';
-import type {RenderManifest} from '../types.js';
+import type {RenderDefinitionContext, RenderDocumentContext} from '../types.js';
 import {BaseRenderer} from '../renderer.class.js';
 
+type DocumentRenderFunctions = {
+	title: (context: RenderDocumentContext) => string;
+	headerText: (context: RenderDocumentContext) => string;
+};
+
 export class SimpleRenderer extends BaseRenderer {
-	async documentNode(node: SchemaUriNode, manifest: RenderManifest, tree: SchemaTree): Promise<void> {
+	async documentNode({node, manifest}: RenderDocumentContext): Promise<void> {
 		if (node.path === '') {
 			manifest.push({
 				path: [node.path, 'index.md'].filter(Boolean).join('/'),
@@ -28,10 +31,10 @@ export class SimpleRenderer extends BaseRenderer {
 		}
 	}
 
-	async definitionNode(node: SchemaUriNode, definition: {path: string; key: string}, manifest: RenderManifest, tree: SchemaTree): Promise<void> {
+	async definitionNode({key, document: {node, manifest}}: RenderDefinitionContext): Promise<void> {
 		manifest.push({
-			path: [node.path, `${definition.key}.md`].filter(Boolean).join('/'),
-			file: {type: 'markdown', content: `# ${capitalCase(definition.key)}`},
+			path: [node.path, `${key}.md`].filter(Boolean).join('/'),
+			file: {type: 'markdown', content: `# ${capitalCase(key)}`},
 		});
 	}
 }

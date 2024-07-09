@@ -1,6 +1,7 @@
 import {type SchemaTree} from 'src/tree/tree.class.js';
-import type {SchemaUriNode} from 'src/tree/types.js';
-import type {Renderer, RenderManifest} from './types.js';
+import type {
+	RenderDefinitionContext, RenderDocumentContext, Renderer, RenderManifest,
+} from './types.js';
 
 export abstract class BaseRenderer implements Renderer {
 	static getDefinitionKey(name: string) {
@@ -9,30 +10,39 @@ export abstract class BaseRenderer implements Renderer {
 
 	async render(tree: SchemaTree): Promise<RenderManifest> {
 		// Recursively walk down the tree and plot each node
-		return this.recursiveTreeWalk(tree.tree, [], tree);
+		return this.recursiveTreeWalk({
+			node: tree.tree,
+			manifest: [],
+			tree,
+		});
 	}
 
-	async recursiveTreeWalk(node: SchemaUriNode, manifest: RenderManifest, tree: SchemaTree): Promise<RenderManifest> {
-		await this.documentNode(node, manifest, tree);
+	async recursiveTreeWalk(context: RenderDocumentContext): Promise<RenderManifest> {
+		await this.documentNode(context);
 
-		for (const definition of node.definitions) {
+		for (const definition of context.node.definitions) {
 			// eslint-disable-next-line no-await-in-loop
 			await this.definitionNode(
-				node,
-				{path: definition, key: BaseRenderer.getDefinitionKey(definition)},
-				manifest,
-				tree,
+				{
+					document: context,
+					path: definition,
+					key: BaseRenderer.getDefinitionKey(definition),
+				},
 			);
 		}
 
-		for (const child of node.children) {
+		for (const child of context.node.children) {
 			// eslint-disable-next-line no-await-in-loop
-			await this.recursiveTreeWalk(child, manifest, tree);
+			await this.recursiveTreeWalk({
+				node: child,
+				manifest: context.manifest,
+				tree: context.tree,
+			});
 		}
 
-		return manifest;
+		return context.manifest;
 	}
 
-	abstract documentNode(node: SchemaUriNode, manifest: RenderManifest, tree: SchemaTree): Promise<void>;
-	abstract definitionNode(node: SchemaUriNode, definition: {path: string; key: string}, manifest: RenderManifest, tree: SchemaTree): Promise<void>;
+	abstract documentNode(context: RenderDocumentContext): Promise<void>;
+	abstract definitionNode(context: RenderDefinitionContext): Promise<void>;
 }

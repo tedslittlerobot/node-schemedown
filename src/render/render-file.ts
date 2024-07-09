@@ -11,15 +11,19 @@ export async function renderFile(file: RenderableFile): Promise<string> {
 		}
 
 		case 'markdown': {
+			const content = Array.isArray(file.content)
+				? file.content.filter(Boolean).join('\n\n')
+				: file.content;
+
 			if (file.frontMatter && Object.keys(file.frontMatter).length > 0) {
 				return `---
 ${JSON.stringify(file.frontMatter)}
 ---
 
-${file.content}`;
+${content}`;
 			}
 
-			return file.content;
+			return content;
 		}
 	}
 }
