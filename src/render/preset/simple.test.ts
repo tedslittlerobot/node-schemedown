@@ -14,7 +14,7 @@ test('is correct', async t => {
 			},
 			{
 				path: 'shop.md',
-				file: {type: 'markdown', content: '# Shop'},
+				file: {type: 'markdown', content: ['# Shop', undefined]},
 			},
 			{
 				path: 'pets/index.md',
@@ -26,7 +26,7 @@ test('is correct', async t => {
 			},
 			{
 				path: 'pets/cat/coat_colour.md',
-				file: {type: 'markdown', content: '# Coat Colour'},
+				file: {type: 'markdown', content: ['# Coat Colour', undefined]},
 			},
 			{
 				path: 'pets/dog/index.md',
@@ -34,7 +34,7 @@ test('is correct', async t => {
 			},
 			{
 				path: 'pets/dog/coat_colour.md',
-				file: {type: 'markdown', content: '# Coat Colour'},
+				file: {type: 'markdown', content: ['# Coat Colour', undefined]},
 			},
 		],
 	);

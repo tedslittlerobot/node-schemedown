@@ -1,5 +1,11 @@
 import {capitalCase} from 'change-case';
-import type {MarkdownRenderer} from './types.js';
+import type {
+	DefinitionMarkdownRenderer,
+	DocumentMarkdownRenderer,
+	MarkdownRenderer,
+	RenderDefinitionContext,
+	RenderDocumentContext,
+} from './types.js';
 
 export const markdownRenderers: MarkdownRenderer = {
 	document: {
@@ -19,3 +25,21 @@ export const markdownRenderers: MarkdownRenderer = {
 		},
 	},
 };
+
+export function renderDocument(context: RenderDocumentContext, overrides: Partial<DocumentMarkdownRenderer> = {}): Array<string | undefined> {
+	const renderer: DocumentMarkdownRenderer = {...overrides, ...markdownRenderers.document};
+
+	return [
+		renderer.title(context),
+		renderer.description(context),
+	];
+}
+
+export function renderDefinition(context: RenderDefinitionContext, overrides: Partial<DefinitionMarkdownRenderer> = {}): Array<string | undefined> {
+	const renderer: DefinitionMarkdownRenderer = {...overrides, ...markdownRenderers.definition};
+
+	return [
+		renderer.title(context),
+		renderer.description(context),
+	];
+}

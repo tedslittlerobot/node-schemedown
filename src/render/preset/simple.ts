@@ -1,7 +1,7 @@
 import {capitalCase} from 'change-case';
 import type {RenderContext, RenderDefinitionContext, RenderDocumentContext} from '../types.js';
 import {BaseRenderer} from '../base-renderer.class.js';
-import {markdownRenderers} from '../markdown.js';
+import {renderDefinition, renderDocument} from '../markdown.js';
 
 export class SimpleRenderer extends BaseRenderer {
 	async rootDocumentNode(context: RenderDocumentContext): Promise<void> {
@@ -18,19 +18,14 @@ export class SimpleRenderer extends BaseRenderer {
 	async documentNode(context: RenderDocumentContext): Promise<void> {
 		context.manifest.push({
 			path: [context.node.path, 'index.md'].filter(Boolean).join('/'),
-			file: {
-				type: 'markdown', content: [
-					markdownRenderers.document.title(context),
-					markdownRenderers.document.description(context),
-				],
-			},
+			file: {type: 'markdown', content: renderDocument(context)},
 		});
 	}
 
-	async definitionNode({key, document: {node, manifest}}: RenderDefinitionContext): Promise<void> {
-		manifest.push({
-			path: [node.path, `${key}.md`].filter(Boolean).join('/'),
-			file: {type: 'markdown', content: `# ${capitalCase(key)}`},
+	async definitionNode(context: RenderDefinitionContext): Promise<void> {
+		context.document.manifest.push({
+			path: [context.document.node.path, `${context.key}.md`].filter(Boolean).join('/'),
+			file: {type: 'markdown', content: renderDefinition(context)},
 		});
 	}
 }
