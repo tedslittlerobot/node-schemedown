@@ -2,6 +2,21 @@ import {type SchemaTree} from 'src/tree/tree.class.js';
 import {type SchemaUriNode} from 'src/tree/types.js';
 import {type Schema} from 'src/types.js';
 
+export type DocumentMarkdownRenderer = {
+	title: (context: RenderDocumentContext) => string;
+	description: (context: RenderDocumentContext) => string | undefined;
+};
+
+export type DefinitionMarkdownRenderer = {
+	title: (context: RenderDefinitionContext) => string;
+	description: (context: RenderDefinitionContext) => string | undefined;
+};
+
+export type MarkdownRenderer = {
+	document: DocumentMarkdownRenderer;
+	definition: DefinitionMarkdownRenderer;
+};
+
 export type RenderContext = {
 	node: SchemaUriNode;
 	manifest: RenderManifest;

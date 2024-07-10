@@ -10,7 +10,7 @@ test('is correct', async t => {
 		[
 			{
 				path: 'index.md',
-				file: {type: 'markdown', content: '# Root'},
+				file: {type: 'markdown', content: ['# Petstore', undefined]},
 			},
 			{
 				path: 'shop.md',
@@ -18,11 +18,11 @@ test('is correct', async t => {
 			},
 			{
 				path: 'pets/index.md',
-				file: {type: 'markdown', content: '# Pets (leaf)'},
+				file: {type: 'markdown', content: '# Pets'},
 			},
 			{
 				path: 'pets/cat/index.md',
-				file: {type: 'markdown', content: '# Cat'},
+				file: {type: 'markdown', content: ['# Cat', undefined]},
 			},
 			{
 				path: 'pets/cat/coat_colour.md',
@@ -30,7 +30,7 @@ test('is correct', async t => {
 			},
 			{
 				path: 'pets/dog/index.md',
-				file: {type: 'markdown', content: '# Dog'},
+				file: {type: 'markdown', content: ['# Dog', undefined]},
 			},
 			{
 				path: 'pets/dog/coat_colour.md',
