@@ -1,5 +1,7 @@
 import {type SchemaTree} from 'src/tree/tree.class.js';
+import {Schema} from 'src/types.js';
 import type {
+	RenderContext,
 	RenderDefinitionContext, RenderDocumentContext, Renderer, RenderManifest,
 } from './types.js';
 
@@ -17,11 +19,13 @@ export abstract class BaseRenderer implements Renderer {
 		});
 	}
 
-	async recursiveTreeWalk(context: RenderDocumentContext): Promise<RenderManifest> {
+	async recursiveTreeWalk(context: RenderContext): Promise<RenderManifest> {
+		const documentSchema = context.tree.schemas.documents[context.node.$id!];
+
 		if (context.node.path === '') {
-			await this.rootDocumentNode(context);
+			await this.rootDocumentNode({schema: documentSchema, ...context});
 		} else if (context.node.definition) {
-			await this.documentNode(context);
+			await this.documentNode({schema: documentSchema, ...context});
 		} else {
 			await this.missingDocumentNode(context);
 		}
@@ -30,7 +34,8 @@ export abstract class BaseRenderer implements Renderer {
 			// eslint-disable-next-line no-await-in-loop
 			await this.definitionNode(
 				{
-					document: context,
+					schema: context.tree.schemas.definitions[definition],
+					document: {schema: documentSchema, ...context},
 					path: definition,
 					key: BaseRenderer.getDefinitionKey(definition),
 				},
@@ -50,7 +55,7 @@ export abstract class BaseRenderer implements Renderer {
 	}
 
 	abstract rootDocumentNode(context: RenderDocumentContext): Promise<void>;
-	abstract missingDocumentNode(context: RenderDocumentContext): Promise<void>;
+	abstract missingDocumentNode(context: RenderContext): Promise<void>;
 	abstract documentNode(context: RenderDocumentContext): Promise<void>;
 	abstract definitionNode(context: RenderDefinitionContext): Promise<void>;
 }

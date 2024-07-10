@@ -1,15 +1,21 @@
 import {type SchemaTree} from 'src/tree/tree.class.js';
 import {type SchemaUriNode} from 'src/tree/types.js';
+import {type Schema} from 'src/types.js';
 
-export type RenderDocumentContext = {
+export type RenderContext = {
 	node: SchemaUriNode;
 	manifest: RenderManifest;
 	tree: SchemaTree;
 };
 
+export type RenderDocumentContext = RenderContext & {
+	schema: Schema;
+};
+
 export type RenderDefinitionContext = {
 	key: string;
 	path: string;
+	schema: Schema;
 	document: RenderDocumentContext;
 };
 

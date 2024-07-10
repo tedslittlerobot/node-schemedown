@@ -7,6 +7,12 @@ type DocumentRenderFunctions = {
 	headerText: (context: RenderDocumentContext) => string;
 };
 
+// Const defaultDocumentRenderFunctions: DocumentRenderFunctions = {
+// 	title({node}) {
+// 		return `# ${capitalCase(node.key)}`;
+// 	},
+// }
+
 export class SimpleRenderer extends BaseRenderer {
 	async rootDocumentNode({node, manifest}: RenderDocumentContext): Promise<void> {
 		manifest.push({
